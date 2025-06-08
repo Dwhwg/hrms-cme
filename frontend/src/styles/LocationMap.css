@@ -1,0 +1,78 @@
+.location-map {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.location-map.view-only {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #e9ecef;
+  pointer-events: none;  /* Disable interaction */
+}
+
+.location-map .leaflet-container {
+  width: 100%;
+  height: 400px;
+  z-index: 1;
+}
+
+.location-map.view-only .leaflet-container {
+  height: 300px;
+  border-radius: 8px;
+  filter: saturate(0.9);  /* Slightly reduce saturation to indicate read-only state */
+}
+
+.map-instructions {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-top: 1px solid #e9ecef;
+  font-size: 14px;
+  color: #6c757d;
+  text-align: center;
+}
+
+.map-search-control {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.map-search-control input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.map-search-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.map-search-buttons button {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.map-search-buttons button:hover {
+  background-color: #0069d9;
+}
+
+.map-search-buttons button:last-child {
+  background-color: #28a745;
+}
+
+.map-search-buttons button:last-child:hover {
+  background-color: #218838;
+} 

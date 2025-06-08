@@ -1,0 +1,309 @@
+.host-account-assignment {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.assignment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.assignment-table th,
+.assignment-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.assignment-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.assignment-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-edit {
+  background-color: #17a2b8;
+  color: white;
+  margin-right: 5px;
+}
+
+.btn-edit:hover {
+  background-color: #138496;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-dialog {
+  margin-top: 10%;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 600px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group.half {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.location-details {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.location-details p {
+  margin: 5px 0;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+  .host-account-assignment {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .assignment-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+/* Styles for searchable dropdowns */
+.dropdown-container {
+  position: relative;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.selected-items-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 5px 8px;
+  min-height: 38px; /* Match height of a typical input */
+  cursor: text;
+}
+
+.placeholder-text {
+  color: #6c757d;
+  flex-grow: 1;
+  padding-right: 25px; /* Space for arrow */
+}
+
+.selected-item-tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e2e6ea;
+  border: 1px solid #dae0e5;
+  border-radius: 3px;
+  padding: 2px 5px;
+  margin: 2px;
+  white-space: nowrap;
+}
+
+.selected-item-tag button {
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 0.9em;
+  margin-left: 5px;
+  cursor: pointer;
+  padding: 0 3px;
+}
+
+.selected-item-tag button:hover {
+  color: #dc3545;
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 16px;
+  min-width: 50px; /* Ensure input is visible even with many tags */
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Allows clicks to pass through to the parent div */
+  color: #6c757d;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  background-color: white;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1001; /* Ensure dropdown is above other content */
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover,
+.dropdown-option.selected {
+  background-color: #f8f9fa;
+}
+
+.dropdown-option.disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+}
+
+/* Add any other specific styles for the host account assignment page here */
+
+/* Styles for Filter Section */
+.filter-section {
+  display: flex;
+  gap: 15px; /* Spacing between filter dropdowns */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow filters to wrap on smaller screens */
+}
+
+.filter-section .form-group {
+  flex: 1; /* Each form group takes equal space */
+  min-width: 180px; /* Minimum width for each filter to prevent squishing */
+  margin-bottom: 0; /* Remove default form-group margin-bottom if not needed here */
+}
+
+/* Styles for header with button */
+.header-with-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+} 

@@ -1,0 +1,140 @@
+/* 直播流管理页面样式 */
+.main-content {
+  padding: 20px;
+}
+
+.alert {
+  margin-bottom: 20px;
+}
+
+/* Card styles */
+.card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.management-card {
+  background-color: #ffffff;
+}
+
+.management-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #f8f9fa;
+}
+
+.management-card .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.management-card .card-title-row {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   margin-bottom: 0.5rem;
+}
+
+.management-card .card-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.management-card .bi-chevron-right {
+  color: #6c757d;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.management-card:hover .bi-chevron-right {
+  transform: translateX(4px);
+  color: #0d6efd;
+}
+
+.management-card .card-text {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Hosts input styles */
+.hosts-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.hosts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.host-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #e9ecef;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.host-item button {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Table responsive styles */
+.table-responsive {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Button styles */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .management-card .card-body {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .management-card .card-body {
+    padding: 1rem;
+  }
+} 
