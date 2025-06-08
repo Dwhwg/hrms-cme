@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - HRMS CME</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            width: 250px;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .attendance-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .attendance-status.clocked-in {
+            border-left: 4px solid var(--success-color);
+        }
+        .attendance-status.clocked-out {
+            border-left: 4px solid var(--danger-color);
+        }
+        .upcoming-event {
+            padding: 10px;
+            border-left: 3px solid var(--secondary-color);
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        .task-item {
+            padding: 10px;
+            border-left: 3px solid #6c757d;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-item.completed {
+            opacity: 0.7;
+        }
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+        }
+        .performance-metric {
+            margin-bottom: 15px;
+        }
+        .progress {
+            height: 8px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -250px;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.active {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="d-flex justify-content-center align-items-center p-4">
+            <h4 class="mb-0"><span style="color: #3498db;">HRMS</span> CME</h4>
+        </div>
+        <div class="px-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="employee-dashboard.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="attendance-history-employee.html">
+                        <i class="bi bi-calendar-check"></i> Attendance History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="approval-request-employee.html">
+                        <i class="bi bi-send-check"></i> Approval Requests
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="work-schedule-employee.html">
+                        <i class="bi bi-calendar-week"></i> Work Schedule
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="attendance-employee.html">
+                        <i class="bi bi-clock-history"></i> Clock In/Out
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-box-arrow-left"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg mb-4">
+            <div class="container-fluid">
+                <button class="btn btn-link d-md-none" type="button">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-bell"></i>
+                                <span class="badge bg-danger rounded-pill">3</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">New approval request</a></li>
+                                <li><a class="dropdown-item" href="#">Schedule update</a></li>
+                                <li><a class="dropdown-item" href="#">New announcement</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> John Doe
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container-fluid">
+            <h2 class="mb-4">Employee Dashboard</h2>
+            
+            <!-- Attendance Status -->
+            <div class="attendance-status clocked-in">
+                <div>
+                    <h5 class="mb-1">You are currently <span class="text-success">clocked in</span></h5>
+                    <p class="mb-0 text-muted">Clock in: 08:05 AM | June 15, 2023</p>
+                </div>
+                <a href="attendance-employee.html" class="btn btn-outline-danger">
+                    <i class="bi bi-box-arrow-right"></i> Clock Out
+                </a>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <i class="bi bi-calendar-check text-primary" style="font-size: 1.5rem;"></i>
+                            <div class="value text-primary">18</div>
+                            <div class="label">Working Days</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <i class="bi bi-check-circle text-success" style="font-size: 1.5rem;"></i>
+                            <div class="value text-success">16</div>
+                            <div class="label">Present Days</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <i class="bi bi-clock-history text-warning" style="font-size: 1.5rem;"></i>
+                            <div class="value text-warning">1</div>
+                            <div class="label">Late Arrivals</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body">
+                            <i class="bi bi-x-circle text-danger" style="font-size: 1.5rem;"></i>
+                            <div class="value text-danger">1</div>
+                            <div class="label">Absences</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Performance Chart -->
+                <div class="col-md-8 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0">Monthly Performance</h5>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 300px;">
+                                <!-- Placeholder for chart -->
+                                <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                    [Performance Chart Here]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Upcoming Events</h5>
+                            <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="upcoming-event">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Team Meeting</strong>
+                                    <small class="text-muted">Tomorrow</small>
+                                </div>
+                                <small class="text-muted">10:00 AM - Conference Room A</small>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Performance Review</strong>
+                                    <small class="text-muted">Jun 20</small>
+                                </div>
+                                <small class="text-muted">02:00 PM - Manager's Office</small>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Training Session</strong>
+                                    <small class="text-muted">Jun 22</small>
+                                </div>
+                                <small class="text-muted">09:00 AM - Training Room</small>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Company Picnic</strong>
+                                    <small class="text-muted">Jun 25</small>
+                                </div>
+                                <small class="text-muted">11:00 AM - Central Park</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Tasks -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">My Tasks</h5>
+                            <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="task-item">
+                                <div>
+                                    <div class="task-title">Complete monthly report</div>
+                                    <small class="text-muted">Due: Today</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox">
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div>
+                                    <div class="task-title">Prepare presentation for client</div>
+                                    <small class="text-muted">Due: Tomorrow</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox">
+                                </div>
+                            </div>
+                            <div class="task-item completed">
+                                <div>
+                                    <div class="task-title">Submit timesheet</div>
+                                    <small class="text-muted">Due: Jun 14</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" checked>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div>
+                                    <div class="task-title">Update project documentation</div>
+                                    <small class="text-muted">Due: Jun 18</small>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0">Performance Metrics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="performance-metric">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Productivity</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="performance-metric">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Quality</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="performance-metric">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Attendance</span>
+                                    <span>89%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 89%"></div>
+                                </div>
+                            </div>
+                            <div class="performance-metric">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Teamwork</span>
+                                    <span>78%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div class="performance-metric">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Initiative</span>
+                                    <span>95%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.navbar-toggler').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+User memilih account (bisa pilih beberapa akun sekaligus) yang ingin dibuat jadwalnya
+User memilih start date, lalu klik auto generate schedule
+sistem otomatis memilih 7 hari dari tanggal yang dipilih user.
+sistem membagikan setiap host di masing-masing akun untuk punya 1 hari libur dalam 7 hari tersebut, lalu menyimpannya di tabel host_availability
+Sistem ambil nilai switch_host_every dari tabel live_accounts→ misal 1 jam
+Sistem mentukan slot waktu aktif akun (misal 07:00–23:00)
+Sistem membagi waktu menjadi blok berdasarkan switch_host_every → contoh: 07.00–08.00, 08.00–09.00, dst.
+Sistem ambil daftar host yang tersedia dan ditugaskan ke akun tersebut
+Buat log aktivitas harian untuk setiap host:
+Hitung total jam live yang sudah terpakai
+Hitung total jam standby berdasarkan waktu slot pertama & terakhir mereka
+
+Susun penjadwalan dengan aturan:
+Tidak melebihi 6 jam live total per host
+Minimal 4 jam live total per host
+Tidak melebihi 10 jam total standby (waktu dari shift pertama ke shift terakhir)
+Hindari jeda panjang antar slot host
+
+Simpan hasil ke live_schedules
+
+Validasi apakah semua akun punya host setiap slot aktif
+
+Validasi apakah semua host memenuhi minimal 4 jam jika dijadwalkan hari itu
+
+Validasi bahwa tidak ada host melampaui batas 6 jam live atau 10 jam standby

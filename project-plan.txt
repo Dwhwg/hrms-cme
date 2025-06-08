@@ -1,0 +1,213 @@
+# Rencana Pengembangan HRMS CME
+
+## Daftar Fitur
+1. Landing Page
+2. Login Page
+3. Attendance History (Employee)
+4. Attendance History (PIC)
+5. Approval Request (Employee)
+6. Approval Request (PIC)
+7. Work Schedule (Employee)
+8. Work Schedule (PIC)
+9. Dashboard (Employee) - melihat performance sendiri
+10. Dashboard (PIC) - melihat performance sendiri dan semua karyawan
+11. Attendance (Employee & PIC) - clock in/clock out dengan foto dan lokasi
+12. Employee Management (PIC)
+13. Office Location Management (PIC)
+14. Live Account Management (PIC)
+
+## Timeline Pengembangan (1 Bulan)
+
+### Minggu 1: Setup dan Autentikasi
+**Hari 1-2: Setup Proyek**
+- Inisialisasi setup proyek
+- Membuat struktur dasar frontend dan backend
+- Setup database
+- Konfigurasi environment development
+
+**Hari 3-4: Autentikasi**
+- Implementasi sistem login
+- Pembuatan role user
+- Setup kontrol akses
+- Implementasi manajemen sesi
+
+### Minggu 2: Fitur Dasar
+**Hari 5-6: Landing Page & Dashboard**
+- Desain dan implementasi halaman login
+- Pembuatan navbar responsif
+- Implementasi dashboard dasar
+
+**Hari 7-10: Manajemen Karyawan & Lokasi Kantor**
+- Implementasi fitur manajemen karyawan
+- Pembuatan profil karyawan
+- Implementasi manajemen akses
+- Implementasi manajemen lokasi kantor
+- Integrasi peta untuk lokasi kantor
+
+### Minggu 3: Fitur Kehadiran dan Live Account
+**Hari 11-14: Sistem Kehadiran & Live Account**
+- Implementasi fitur clock in/out
+- Integrasi layanan lokasi
+- Implementasi upload foto
+- Pembuatan riwayat kehadiran
+- Implementasi manajemen akun live streaming
+- Pembuatan sistem penjadwalan host
+
+### Minggu 4: Fitur Jadwal dan Persetujuan
+**Hari 15-18: Jadwal Kerja & Auto Generate Schedule**
+- Implementasi sistem jadwal kerja
+- Pembuatan interface manajemen jadwal
+- Implementasi sistem persetujuan
+- Implementasi auto generate schedule untuk host live streaming
+
+**Hari 19-22: Dashboard dan Laporan**
+- Implementasi dashboard karyawan
+- Implementasi dashboard PIC
+- Pembuatan laporan performa
+- Implementasi fitur export laporan
+
+**Hari 23-30: Pengujian dan Penyempurnaan**
+- Melakukan pengujian sistem
+- Perbaikan bug dan optimasi
+- Persiapan deployment
+
+## Teknologi yang Digunakan
+1. Frontend:
+   - React.js
+   - Bootstrap 5
+   - Redux untuk state management
+   - Axios untuk API calls
+   - Leaflet/Google Maps untuk peta
+
+2. Backend:
+   - Node.js
+   - Express.js
+   - JWT untuk autentikasi
+   - PostgreSQL
+   - Socket.io untuk real-time monitoring
+
+3. Tools:
+   - Git untuk version control
+   - Postman untuk API testing
+   - VS Code sebagai IDE
+
+## Struktur Database (PostgreSQL)
+```sql
+-- Users
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    password VARCHAR(255),
+    role VARCHAR(20),
+    created_at TIMESTAMP
+);
+
+-- Employees
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    name VARCHAR(100),
+    position VARCHAR(100),
+    department VARCHAR(100)
+);
+
+-- Office Locations
+CREATE TABLE office_locations (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    address TEXT,
+    latitude DECIMAL(10,8),
+    longitude DECIMAL(11,8),
+    radius INTEGER, -- dalam meter
+    created_by INTEGER REFERENCES users(id),
+    created_at TIMESTAMP
+);
+
+-- Live Accounts
+CREATE TABLE live_accounts (
+    id SERIAL PRIMARY KEY,
+    account_name VARCHAR(100),
+    platform VARCHAR(50),
+    status VARCHAR(20),
+    office_location_id INTEGER REFERENCES office_locations(id),
+    created_at TIMESTAMP
+);
+
+-- Live Hosts
+CREATE TABLE live_hosts (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employees(id),
+    live_account_id INTEGER REFERENCES live_accounts(id),
+    is_main_host BOOLEAN,
+    created_at TIMESTAMP
+);
+
+-- Live Schedules
+CREATE TABLE live_schedules (
+    id SERIAL PRIMARY KEY,
+    live_account_id INTEGER REFERENCES live_accounts(id),
+    host_id INTEGER REFERENCES live_hosts(id),
+    office_location_id INTEGER REFERENCES office_locations(id),
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
+    status VARCHAR(20),
+    created_by INTEGER REFERENCES users(id),
+    created_at TIMESTAMP
+);
+
+-- Attendance
+CREATE TABLE attendance (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employees(id),
+    office_location_id INTEGER REFERENCES office_locations(id),
+    clock_in TIMESTAMP,
+    clock_out TIMESTAMP,
+    location VARCHAR(255),
+    photo_url VARCHAR(255),
+    status VARCHAR(20)
+);
+
+-- Work Schedules
+CREATE TABLE work_schedules (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employees(id),
+    start_time TIME,
+    end_time TIME,
+    date DATE
+);
+
+-- Approval Requests
+CREATE TABLE approval_requests (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employees(id),
+    type VARCHAR(50),
+    status VARCHAR(20),
+    created_at TIMESTAMP,
+    approved_by INTEGER REFERENCES users(id)
+);
+```
+
+## Fitur Tambahan
+### Office Location Management (PIC)
+- Menambahkan lokasi kantor baru
+- Mengatur radius area kerja
+- Melihat daftar lokasi kantor
+- Mengedit dan menghapus lokasi kantor
+
+### Live Account Management (PIC)
+- 直播账号管理 (Manajemen akun live streaming)
+- 添加和管理直播账号 (Menambah dan mengelola akun live streaming)
+- 设置主要主持人 (Mengatur host utama)
+- 自动生成直播时间表 (Auto generate jadwal live streaming)
+- 查看直播历史记录 (Melihat riwayat live streaming)
+- 直播账号状态监控 (Monitoring status akun live streaming)
+
+## Catatan Penting
+1. Desain harus profesional dan serius
+2. Aplikasi harus responsif di berbagai device
+3. Implementasi keamanan yang ketat
+4. Sistem auto generate schedule harus mempertimbangkan:
+   - Ketersediaan host utama
+   - Jadwal kerja host
+   - Waktu optimal untuk live streaming
+5. Backup data secara berkala 
